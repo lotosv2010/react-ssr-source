@@ -1,0 +1,22 @@
+{
+  "name": "react-ssr-source",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lotosv2010/react-ssr-source.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lotosv2010/react-ssr-source/issues"
+  },
+  "homepage": "https://github.com/lotosv2010/react-ssr-source#readme",
+  "dependencies": {
+    "koa": "^2.13.1"
+  }
+}
