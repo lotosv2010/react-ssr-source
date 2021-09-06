@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
+import {connect} from 'react-redux';
+import actions from '../../redux/actions/counter';
 
-function Counter() {
-  const [number, setNumber] = useState(0);
+function Counter(props) {
+  const {number, increment} = props;
 
-  const add = () => {
-    setNumber(number + 1);
-  }
   return (
     <div>
       <p>{number}</p>
-      <button onClick={add}>+</button>
+      <button onClick={increment}>+</button>
     </div>
   );
 }
 
-export default Counter;
+const mapToState = (state) => ({...state.counter})
+
+export default connect(mapToState, actions)(Counter);
