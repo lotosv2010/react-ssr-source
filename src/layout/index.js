@@ -4,7 +4,7 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import routes from "../routes";
 
 const { Header, Content } = Layout;
@@ -30,7 +30,7 @@ export default class extends React.Component {
             </Menu>
           </Header>
           <Content style={{ padding: '0 50px', marginTop: 64, height: 'calc(100vh - 64px)'}}>
-            {routes}
+            {routes.map(route => (<Route {...route} />))}
           </Content>
         </Layout>
       </Layout>

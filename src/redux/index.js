@@ -8,5 +8,7 @@ export function getServerStore() { // 导出方法是防止服务端数据共享
 }
 
 export function getClientStore() {
-  return createStore(reducers, applyMiddleware(thunk, logger));
+  // todo: 
+  const initState = window.context.state;
+  return createStore(reducers, initState, applyMiddleware(thunk, logger));
 }

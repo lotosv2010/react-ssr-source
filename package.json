@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev:start:api": "nodemon api/index.js",
     "dev:start": "nodemon build/server.js",
     "dev:build:server": "webpack --config webpack.server.js --watch",
     "dev:build:client": "webpack --config webpack.client.js --watch",
@@ -21,8 +22,12 @@
   "homepage": "https://github.com/lotosv2010/react-ssr-source#readme",
   "dependencies": {
     "@babel/runtime": "^7.15.4",
+    "@koa/cors": "^3.1.0",
     "antd": "^4.16.13",
+    "axios": "^0.21.3",
+    "cors": "^2.8.5",
     "koa": "^2.13.1",
+    "koa-favicon": "^2.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.5",
