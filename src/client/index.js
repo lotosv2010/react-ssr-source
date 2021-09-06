@@ -1,24 +1,5 @@
-const Koa = require('koa');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Counter from '../components/Counter';
 
-const app = new Koa();
-
-const html = `
-    <html>
-        <head></head>
-        <body>
-            <p id="root"></p>
-            <script>
-                document.getElementById('root').innerHTML='hello';
-            </script>
-        </body>
-    </html>`
-
-app.use(async ctx => {
-    ctx.body = html;
-});
-
-app.listen(3001, error => {
-    if(error) throw error;
-    console.log(`App running at:`);
-    console.log(`- Local:   http://localhost:3001`)
-})
+ReactDOM.hydrate(<Counter />, document.querySelector('#root'));
