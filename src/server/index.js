@@ -2,7 +2,7 @@ const Koa = require('koa');
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 import {StaticRouter} from 'react-router-dom';
-import routes from '../routes';
+import Layout from '../layout';
 const app = new Koa();
 
 // 处理静态资源
@@ -15,12 +15,13 @@ const router = new Router();
 router.get('(.*)', async (ctx) => {
   const jsx = renderToString(
     <StaticRouter context={{}} location={ctx.path}>
-      {routes}
+      <Layout />
     </StaticRouter>);
   const html = `
   <html>
     <head></head>
     <title>react-ssr</title>
+    <link rel="stylesheet" type="text/css" href='https://unpkg.com/antd@4.17.0-alpha.0/dist/antd.css'>
     <body>
       <div id='root'>${jsx}</div>
       <script src='/client.js'></script>
