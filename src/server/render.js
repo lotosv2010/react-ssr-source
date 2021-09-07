@@ -20,7 +20,9 @@ export default async function(ctx, next) {
       notFound = true;
     }
     if(route.loadData) {
-      promise.push(route.loadData(store));
+      promise.push(new Promise((resolve) => {
+        return route.loadData(store).then(resolve, resolve)
+      }));
     }
   });
   const data = await Promise.all(promise);

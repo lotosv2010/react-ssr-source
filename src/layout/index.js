@@ -48,9 +48,9 @@ const mapToState = state => ({
   ...state.session
 })
 
-// todo：这里有问题待解决
-// BaseLayout.loadData = (store) => {
-//   return store.dispatch(actions.getInfo());
-// }
+// todo
+BaseLayout.loadData = (store) => {
+  return store.dispatch(actions.getInfo());
+}
 
 export default connect(mapToState, actions)(BaseLayout);
