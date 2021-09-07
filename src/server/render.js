@@ -45,6 +45,12 @@ export default async function(ctx, next) {
       <script src='/client.js'></script>
     </body>
   </html>`;
-  if(notFound) ctx.status = 404;
-  ctx.body = html;
+  if(notFound) {
+    ctx.status = 404;
+  } else if(context.action === 'REPLACE') {
+    ctx.status = 302;
+    ctx.response.redirect(context.url);
+  } else {
+    ctx.body = html;
+  }
 }

@@ -2,14 +2,14 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import actions from '../../redux/actions/home';
 import { List, Avatar } from 'antd';
+import {Redirect} from 'react-router-dom';
 
 const Home = (props) => {
-  const {getList, list, user, history} = props;
+  const {getList, list, user} = props;
   useEffect(() => {
-    if(!user) history.push({pathname: '/login', state: {from: '/'}});
-    // list.length === 0 && getList();
+    list.length === 0 && getList();
   }, [user])
-  return <div>
+  return user ? <div>
     <List
       itemLayout="horizontal"
       dataSource={list}
@@ -23,7 +23,7 @@ const Home = (props) => {
         </List.Item>
       )}
     />
-  </div>
+  </div>: <Redirect to={{pathname: '/login', state: {from: '/'}}} />;
 };
 
 const mapToState = state => ({

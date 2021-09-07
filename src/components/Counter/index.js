@@ -1,20 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import actions from '../../redux/actions/counter';
+import {Redirect} from 'react-router-dom';
 
 function Counter(props) {
-  const {number, increment, user, history} = props;
+  const {number, increment, user} = props;
 
-  useEffect(() => {
-    if(!user) history.push({pathname: '/login', state: {from: '/counter'}});
-  }, [])
-
-  return (
+  return user ? (
     <div>
       <p>{number}</p>
       <button onClick={increment}>+</button>
     </div>
-  );
+  ): <Redirect to={{pathname: '/login', state: {from: '/counter'}}} />;
 }
 
 const mapToState = (state) => ({...state.counter, ...state.session})
