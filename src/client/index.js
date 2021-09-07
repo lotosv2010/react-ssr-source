@@ -1,24 +1,17 @@
-const Koa = require('koa');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
+import {Provider} from 'react-redux';
+import {getClientStore} from '../redux';
+import {renderRoutes} from 'react-router-config';
+import routes from '../routes';
 
-const app = new Koa();
+const App = () => (
+  <Provider store={getClientStore()}>
+    <Router>
+      {renderRoutes(routes)}
+    </Router>
+  </Provider>
+);
 
-const html = `
-    <html>
-        <head></head>
-        <body>
-            <p id="root"></p>
-            <script>
-                document.getElementById('root').innerHTML='hello';
-            </script>
-        </body>
-    </html>`
-
-app.use(async ctx => {
-    ctx.body = html;
-});
-
-app.listen(3001, error => {
-    if(error) throw error;
-    console.log(`App running at:`);
-    console.log(`- Local:   http://localhost:3001`)
-})
+ReactDOM.hydrate(<App />, document.querySelector('#root'));

@@ -1,26 +1,36 @@
 const Koa = require('koa');
-import React from 'react';
-import {renderToString} from 'react-dom/server';
-import Home from '../components/Home';
+const favicon = require('koa-favicon');
+const proxy = require('koa-proxies');
+import render from './render';
+
 const app = new Koa();
+// 处理静态资源
+app.use(require('koa-static')('public'));
 
-const jsx = renderToString(<Home />);
-console.log(jsx);
-const html = `
-  <html>
-    <head></head>
-    <title>react-ssr</title>
-    <body>
-      <div id='root'>${jsx}</div>
-    </body>
-  </html>`
+// icon
+app.use(favicon(__dirname, 'public/client.js'));
 
-app.use(async ctx => {
-  ctx.body = html;
+// proxy
+app.use(proxy('/api', {
+  target: 'http://localhost:3002',    
+  changeOrigin: true,
+  rewrite: path => path,
+  logs: true
+}))
+
+// 单独创建router的实例
+const Router = require('koa-router');
+const router = new Router();
+
+router.get('(.*)', async (ctx, next) => {
+  await render(ctx, next);
 });
 
-app.listen(3000, error => {
+// 启动路由
+app.use(router.routes()).use(router.allowedMethods());
+
+app.listen(3001, error => {
   if (error) throw error;
   console.log(`App running at:`);
-  console.log(`- Local:   http://localhost:3000`)
+  console.log(`- Local:   http://localhost:3001`)
 })
