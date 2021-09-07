@@ -5,6 +5,7 @@ import Layout from '../layout';
 import {Provider} from 'react-redux';
 import {getServerStore} from '../redux';
 import routes from '../routes';
+import {renderRoutes, matchRoutes} from 'react-router-config';
 
 export default async function(ctx, next) {
   const context = {};
@@ -12,9 +13,9 @@ export default async function(ctx, next) {
   const store = getServerStore();
   // 获取要渲染的组件
   // matchPath 判断路径和路由对象是否匹配
-  const matchRoutes = routes.filter(route => (matchPath(ctx.path, route)));
+  const matchedRoutes = matchRoutes(routes, ctx.path);
   const promise = [];
-  matchRoutes.forEach( async (route) => {
+  matchedRoutes.forEach( async (route) => {
     if(route.loadData) {
       promise.push(route.loadData(store));
     }
@@ -23,7 +24,7 @@ export default async function(ctx, next) {
   const jsx = renderToString(
     <Provider store={store}>
       <StaticRouter context={context} location={ctx.path}>
-        <Layout />
+        {renderRoutes(routes)}
       </StaticRouter>
     </Provider>);
   const html = `

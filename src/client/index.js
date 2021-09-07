@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router} from 'react-router-dom';
-import Layout from '../layout';
 import {Provider} from 'react-redux';
 import {getClientStore} from '../redux';
+import {renderRoutes} from 'react-router-config';
+import routes from '../routes';
 
 const App = () => (
   <Provider store={getClientStore()}>
     <Router>
-      <Layout />
+      {renderRoutes(routes)}
     </Router>
   </Provider>
 );
