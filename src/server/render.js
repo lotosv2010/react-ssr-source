@@ -8,7 +8,8 @@ import {renderRoutes, matchRoutes} from 'react-router-config';
 
 export default async function(ctx, next) {
   let notFound = false;
-  const context = {};
+  // 收集每个组件引入的样式
+  const context = {csses: []};
   // 创建仓库的时候，仓库里的数据已经有了默认值
   const store = getServerStore(ctx);
   // 获取要渲染的组件
@@ -26,16 +27,19 @@ export default async function(ctx, next) {
     }
   });
   const data = await Promise.all(promise);
+  
   const jsx = renderToString(
     <Provider store={store}>
       <StaticRouter context={context} location={ctx.path}>
         {renderRoutes(routes)}
       </StaticRouter>
     </Provider>);
+  const cssStr = context.csses.join('\n');
   const html = `
   <html>
     <head></head>
     <title>react-ssr</title>
+    <style>${cssStr}</style>
     <link rel="stylesheet" type="text/css" href='https://unpkg.com/antd@4.17.0-alpha.0/dist/antd.css'>
     <body>
       <div id='root'>${jsx}</div>

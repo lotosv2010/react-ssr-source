@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import actions from '../../redux/actions/counter';
 import {Redirect} from 'react-router-dom';
+import './index.css';
 
 function Counter(props) {
   const {number, increment, user} = props;

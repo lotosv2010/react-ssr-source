@@ -13,4 +13,20 @@ module.exports = merge(base, {
   // 检测所有引入的node核心模块，
   // 并且告诉webpack不要把核心模块打包到server.js中去
   externals: [webpackNodeExternals()],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'isomorphic-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          }
+        ]
+      }
+    ]
+  }
 });
