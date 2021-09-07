@@ -3,10 +3,10 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import reducers from './reducers';
 import clientRequest from '../client/request';
-import serverRequest from '../server/request';
+import createServerRequest from '../server/request';
 
-export function getServerStore() { // 导出方法是防止服务端数据共享的问题
-  return createStore(reducers, applyMiddleware(thunk.withExtraArgument(serverRequest), logger));
+export function getServerStore(ctx) { // 导出方法是防止服务端数据共享的问题
+  return createStore(reducers, applyMiddleware(thunk.withExtraArgument(createServerRequest(ctx)), logger));
 }
 
 export function getClientStore() {

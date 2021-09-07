@@ -9,17 +9,17 @@ import {renderRoutes, matchRoutes} from 'react-router-config';
 export default async function(ctx, next) {
   const context = {};
   // 创建仓库的时候，仓库里的数据已经有了默认值
-  const store = getServerStore();
+  const store = getServerStore(ctx);
   // 获取要渲染的组件
   // matchPath 判断路径和路由对象是否匹配
   const matchedRoutes = matchRoutes(routes, ctx.path);
   const promise = [];
-  matchedRoutes.forEach( async (route) => {
+  matchedRoutes.forEach( async ({route}) => {
     if(route.loadData) {
       promise.push(route.loadData(store));
     }
   });
-  await Promise.all(promise);
+  const data = await Promise.all(promise);
   const jsx = renderToString(
     <Provider store={store}>
       <StaticRouter context={context} location={ctx.path}>

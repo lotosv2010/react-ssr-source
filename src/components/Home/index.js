@@ -4,10 +4,11 @@ import actions from '../../redux/actions/home';
 import { List, Avatar } from 'antd';
 
 const Home = (props) => {
-  const {getList, list} = props;
+  const {getList, list, user, history} = props;
   useEffect(() => {
-    list.length === 0 && getList();
-  }, [])
+    if(!user) history.push({pathname: '/login', state: {from: '/'}});
+    // list.length === 0 && getList();
+  }, [user])
   return <div>
     <List
       itemLayout="horizontal"
@@ -26,7 +27,8 @@ const Home = (props) => {
 };
 
 const mapToState = state => ({
-  ...state.home
+  ...state.home,
+  ...state.session
 })
 
 // todo：此方法是用来实现异步加载数据

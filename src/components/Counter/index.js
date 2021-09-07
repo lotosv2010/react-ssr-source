@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import actions from '../../redux/actions/counter';
 
 function Counter(props) {
-  const {number, increment} = props;
+  const {number, increment, user, history} = props;
+
+  useEffect(() => {
+    if(!user) history.push({pathname: '/login', state: {from: '/counter'}});
+  }, [])
 
   return (
     <div>
@@ -13,6 +17,6 @@ function Counter(props) {
   );
 }
 
-const mapToState = (state) => ({...state.counter})
+const mapToState = (state) => ({...state.counter, ...state.session})
 
 export default connect(mapToState, actions)(Counter);

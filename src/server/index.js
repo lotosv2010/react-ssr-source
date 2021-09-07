@@ -12,7 +12,7 @@ app.use(favicon(__dirname, 'public/client.js'));
 
 // proxy
 app.use(proxy('/api', {
-  target: 'http://127.0.0.1:3002',    
+  target: 'http://localhost:3002',    
   changeOrigin: true,
   rewrite: path => path,
   logs: true
