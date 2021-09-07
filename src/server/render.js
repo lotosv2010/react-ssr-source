@@ -7,6 +7,7 @@ import routes from '../routes';
 import {renderRoutes, matchRoutes} from 'react-router-config';
 
 export default async function(ctx, next) {
+  let notFound = false;
   const context = {};
   // 创建仓库的时候，仓库里的数据已经有了默认值
   const store = getServerStore(ctx);
@@ -15,6 +16,9 @@ export default async function(ctx, next) {
   const matchedRoutes = matchRoutes(routes, ctx.path);
   const promise = [];
   matchedRoutes.forEach( async ({route}) => {
+    if(route.key === '/notFound') {
+      notFound = true;
+    }
     if(route.loadData) {
       promise.push(route.loadData(store));
     }
@@ -41,5 +45,6 @@ export default async function(ctx, next) {
       <script src='/client.js'></script>
     </body>
   </html>`;
+  if(notFound) ctx.status = 404;
   ctx.body = html;
 }

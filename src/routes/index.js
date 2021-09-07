@@ -1,6 +1,7 @@
 import Home from '../components/Home';
 import Counter from '../components/Counter';
 import Login from '../components/Login';
+import NotFound from '../components/NotFound';
 import Layout from '../layout/index';
 
 const routes = [
@@ -25,6 +26,10 @@ const routes = [
         path: '/login',
         component: Login,
         key: '/login'
+      },
+      {
+        component: NotFound,
+        key: '/notFound'
       }
     ]
   }
