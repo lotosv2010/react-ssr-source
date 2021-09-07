@@ -1,7 +1,6 @@
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 import {StaticRouter, matchPath} from 'react-router-dom';
-import Layout from '../layout';
 import {Provider} from 'react-redux';
 import {getServerStore} from '../redux';
 import routes from '../routes';
